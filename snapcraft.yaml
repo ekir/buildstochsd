@@ -1,5 +1,5 @@
 name: stochsim
-version: 0.5.10
+version: 0.5.15
 summary: System dynamics simulation
 description: >
   System dynamics simulation
@@ -10,7 +10,9 @@ parts:
   stochsd:
     plugin: dump
     source: StochSim-Linux64bit-2018-07-29.tgz
+    after: [desktop-gtk3]
     stage-packages:
+    - libgtk-3-common
     - libasound2
     - libatk1.0-0
     - libatk-bridge2.0-0
@@ -90,11 +92,16 @@ parts:
     - libxtst6
     - zlib1g
     - libgl1-mesa-glx
+    - libgtk2.0-0
 
 apps:
   stochsim:
-    command: stochsim
+    command: bin/desktop-launch $SNAP/stochsim
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
     plugs:
+    - home
+    - gsettings
     - network
     - network-bind
     - x11
